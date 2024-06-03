@@ -14,9 +14,9 @@ type Props = {
 }
 
 const { data, readTime, headings, id } = Astro.props
-const { title, description, pubDate, heroImage, tags } = data
+const { title, description, publishDate, heroImage, tags } = data
 
-const articleDate = pubDate.toISOString()
+const articleDate = publishDate.toISOString()
 ---
 
 <BaseLayout
@@ -30,7 +30,7 @@ const articleDate = pubDate.toISOString()
 			<div class='flex flex-col gap-2'>
 				<div class='flex items-center justify-center gap-x-1'>
 					<p class='text-center text-sm text-opacity-50'>
-						Published <FormattedDate date={pubDate} />
+						Published <FormattedDate date={publishDate} />
 					</p>
 					<p class='text-center text-sm text-opacity-50 font-bold'>
 						- {readTime}
@@ -69,6 +69,26 @@ const articleDate = pubDate.toISOString()
 			<slot />
 		</div>
 	</article>
+	<button
+		aria-label='Back to Top'
+		class='z-90 fixed bottom-8 end-4 flex h-10 w-10 translate-y-28 items-center justify-center rounded-full border-2 border-transparent bg-zinc-200 text-3xl opacity-0 transition-all duration-300 hover:border-zinc-400 data-[show=true]:translate-y-0 data-[show=true]:opacity-100 dark:bg-zinc-700 sm:end-8 sm:h-12 sm:w-12'
+		data-show='false'
+		id='to-top-btn'
+		style='opacity: 1;--tw-translate-y: 0px;
+		transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));'
+		><svg
+			aria-hidden='true'
+			class='h-6 w-6'
+			fill='none'
+			focusable='false'
+			stroke='currentColor'
+			stroke-width='2'
+			viewBox='0 0 24 24'
+			xmlns='http://www.w3.org/2000/svg'
+		>
+			<path d='M4.5 15.75l7.5-7.5 7.5 7.5' stroke-linecap='round' stroke-linejoin='round'></path>
+		</svg>
+	</button>
 </BaseLayout>
 
 <script>
@@ -122,4 +142,9 @@ const articleDate = pubDate.toISOString()
 	}
 	fnObserver()
 	document.addEventListener('astro:after-swap', fnObserver)
+
+	const scrollBtn = document.getElementById('to-top-btn') as HTMLButtonElement
+	scrollBtn.addEventListener('click', () => {
+		document.documentElement.scrollTo({ behavior: 'smooth', top: 0 })
+	})
 </script>

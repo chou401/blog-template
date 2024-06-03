@@ -52,7 +52,7 @@ export default defineConfig({
 					},
 					{
 						type: 'datetime',
-						name: 'pubDate',
+						name: 'publishDate',
 						label: 'Publication Date',
 						required: true
 					},
